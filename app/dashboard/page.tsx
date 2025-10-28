@@ -10,6 +10,7 @@ import RoadmapList from "./components/RoadmapList";
 import SuggestionsWidget from "./components/SuggestionsWidget";
 import AlumniList from "./components/AlumniList";
 import Toast from "./components/Toast";
+import StartupGuide from "./components/StartupGuide";
 import {
   jobs,
   roadmapTasks as initialTasks,
@@ -25,12 +26,24 @@ export default function DashboardPage() {
   const [applications, setApplications] = useState<Application[]>(initialApplications);
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [showStartupGuide, setShowStartupGuide] = useState(false);
 
   // Load tasks from localStorage on mount
   useEffect(() => {
     const savedTasks = localStorage.getItem("roadmapTasks");
     if (savedTasks) {
       setTasks(JSON.parse(savedTasks));
+    }
+  }, []);
+
+  // Check if this is a new user and show startup guide
+  useEffect(() => {
+    const hasVisited = localStorage.getItem("hasVisitedDashboard");
+    if (!hasVisited) {
+      // Show the guide after a short delay for better UX
+      setTimeout(() => {
+        setShowStartupGuide(true);
+      }, 1000);
     }
   }, []);
 
@@ -156,6 +169,11 @@ export default function DashboardPage() {
       </main>
 
       <Toast message={toastMessage} show={showToast} onClose={() => setShowToast(false)} />
+      
+      <StartupGuide 
+        isOpen={showStartupGuide} 
+        onClose={() => setShowStartupGuide(false)} 
+      />
     </div>
   );
 }
