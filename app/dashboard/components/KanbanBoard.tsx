@@ -96,35 +96,38 @@ export default function KanbanBoard({ applications, setApplications }: KanbanBoa
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 min-h-[200px]">
-              {stageApps.map((app) => (
+              {stageApps.map((app, idx) => (
                 <motion.div
                   key={app.id}
-                  layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  draggable
-                  onDragStart={(e: React.DragEvent) => handleDragStart(e, app)}
-                  onDragEnd={handleDragEnd}
-                  className={`bg-white p-3 rounded-lg border shadow-sm cursor-move transition-all hover:shadow-md ${
-                    draggedItem?.id === app.id ? "opacity-50 rotate-2 scale-105" : ""
-                  }`}
+                  transition={{ delay: idx * 0.05 }}
                 >
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex-1">
-                      <h4 className="font-medium text-sm text-slate-900 mb-1">
-                        {app.company}
-                      </h4>
-                      <p className="text-xs text-slate-600">{app.role}</p>
+                  <div
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, app)}
+                    onDragEnd={handleDragEnd}
+                    className={`bg-white p-3 rounded-lg border shadow-sm cursor-move transition-all hover:shadow-md ${
+                      draggedItem?.id === app.id ? "opacity-50 rotate-2 scale-105" : ""
+                    }`}
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <h4 className="font-medium text-sm text-slate-900 mb-1">
+                          {app.company}
+                        </h4>
+                        <p className="text-xs text-slate-600">{app.role}</p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                        <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                        <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
-                      <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
-                      <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
-                    </div>
+                    <Badge className={stageColors[stage]} variant="outline">
+                      {stage}
+                    </Badge>
                   </div>
-                  <Badge className={stageColors[stage]} variant="outline">
-                    {stage}
-                  </Badge>
                 </motion.div>
               ))}
               {stageApps.length === 0 && (
