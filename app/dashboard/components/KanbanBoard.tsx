@@ -103,7 +103,7 @@ export default function KanbanBoard({ applications, setApplications }: KanbanBoa
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   draggable
-                  onDragStart={(e) => handleDragStart(e, app)}
+                  onDragStart={(e: React.DragEvent) => handleDragStart(e, app)}
                   onDragEnd={handleDragEnd}
                   className={`bg-white p-3 rounded-lg border shadow-sm cursor-move transition-all hover:shadow-md ${
                     draggedItem?.id === app.id ? "opacity-50 rotate-2 scale-105" : ""
