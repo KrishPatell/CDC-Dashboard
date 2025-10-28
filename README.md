@@ -1,51 +1,56 @@
-# CDC Platform - Student Dashboard MVP
+# CDC Platform
 
-A beautiful, interactive student career dashboard for the CDC (Career Development Cell) platform.
+## Student-Centric CDC Platform – Final Task Hierarchy
 
-## 🚀 Features
+This repository contains the task hierarchy board for the Interaction Design Project.
 
-### Interactive Dashboard Cards
+### Team Members
+- Krish Patel
+- Parth Akholkar
+- Subhangi
+- Gouri
 
-1. **My Fit Roles** 🎯
-   - AI-powered role matching with fit scores (High/Medium/Low)
-   - Visual skill match percentage with progress bars
-   - Company details, location, CTC range
-   - Deadline tracking
-   - Hover effects and smooth animations
+### Project Overview
+A student-centric CDC (Career Development Center) platform with the following main components:
+- Student Portal
+- Mentorship Hub
+- AI Roadmap Coach
+- CDC Communications
 
-2. **Application Status** 📊
-   - Real-time application pipeline tracking
-   - Stage indicators (Applied → Shortlisted → Test → Interview → Offer)
-   - Activity timestamps
-   - Color-coded status badges
+### Project Details
+Created for Interaction Design Project at Ahmedabad University | 2025
 
-3. **Upcoming Deadlines** 📅
-   - Priority-based deadline visualization
-   - Days remaining countdown
-   - Type indicators (Application/Test/Interview)
-   - Smart color coding (High/Medium/Low priority)
+---
 
-4. **AI Roadmap Coach** ✨
-   - Personalized weekly task recommendations
-   - Interactive task completion (click to toggle)
-   - Category-based tasks (CV, Interview, Skills, Outreach)
-   - Progress tracking with visual progress bar
-   - AI-generated task descriptions
+## 🚀 CDC Dashboard MVP
 
-## 🎨 Design Features
+A beautiful, interactive student career dashboard for the CDC platform.
+
+### Features
+
+#### Original Dashboard (`/`)
+- **My Fit Roles** 🎯 - AI-powered role matching with fit scores
+- **Application Status** 📊 - Real-time application pipeline tracking
+- **Upcoming Deadlines** 📅 - Priority-based deadline visualization
+- **AI Roadmap Coach** ✨ - Personalized weekly task recommendations
+
+#### New Interactive Dashboard (`/dashboard`)
+- **Drag-and-Drop Kanban Board** - Manage applications across stages
+- **Sidebar Navigation** - Quick access to all features
+- **Job Application System** - Apply to roles directly from dashboard
+- **AI Suggestions Widget** - Rotating career advice
+- **Alumni Connect** - Request chats with alumni
+- **Roadmap Checklist** - Track weekly tasks with localStorage persistence
+
+### 🎨 Design Features
 
 - **Modern UI**: Built with shadcn/ui components + Tailwind CSS
 - **Smooth Animations**: Framer Motion for delightful interactions
 - **Responsive Layout**: Works beautifully on all screen sizes
-- **Interactive Elements**: 
-  - Clickable task checkboxes
-  - Hover effects on all cards
-  - Progress bars showing real-time data
-  - Badge indicators for status/priority
-- **Clean Typography**: Professional fonts with clear hierarchy
-- **Gradient Accents**: Subtle gradients for visual polish
+- **Drag & Drop**: Native HTML5 drag-and-drop Kanban board
+- **Interactive Elements**: Clickable tasks, hover effects, progress tracking
 
-## 🛠️ Tech Stack
+### 🛠️ Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
@@ -54,14 +59,15 @@ A beautiful, interactive student career dashboard for the CDC (Career Developmen
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
 
-## 📦 Installation & Setup
+### 📦 Installation & Setup
 
-1. **Navigate to the project**:
+1. **Clone the repository**:
    ```bash
-   cd cdc-dashboard
+   git clone https://github.com/KrishPatell/CDC-Platform.git
+   cd CDC-Platform
    ```
 
-2. **Install dependencies** (if not already installed):
+2. **Install dependencies**:
    ```bash
    npm install
    ```
@@ -72,35 +78,24 @@ A beautiful, interactive student career dashboard for the CDC (Career Developmen
    ```
 
 4. **Open your browser**:
-   Navigate to [http://localhost:3000](http://localhost:3000)
+   - Original Dashboard: [http://localhost:3000](http://localhost:3000)
+   - New Interactive Dashboard: [http://localhost:3000/dashboard](http://localhost:3000/dashboard)
 
-## 📊 Mock Data
+### 📊 Dashboard Pages
 
-The dashboard uses realistic mock data including:
+- **`/`** - Original dashboard with fit roles, applications, deadlines, and AI roadmap
+- **`/dashboard`** - New interactive dashboard with Kanban board, sidebar, and enhanced features
 
-- **Student Profile**: Priya Sharma (MBA 2026)
-- **4 Fit Roles**: Goldman Sachs, McKinsey, Google, Amazon
-- **4 Active Applications**: Various stages
-- **4 Upcoming Deadlines**: Application, Test, Interview types
-- **5 AI Roadmap Tasks**: Mix of CV, Skills, Interview, Outreach tasks
+### 🎯 Interactive Features
 
-## 🎯 Interactive Features
+- ✅ Toggle Tasks - Click any roadmap task to mark complete/incomplete
+- 🎯 Drag & Drop - Drag application cards between stages in Kanban board
+- 📊 Progress Tracking - Real-time progress bars update as you complete tasks
+- 🎨 Color-Coded UI - Visual indicators for priority, status, and fit levels
+- 💬 Toast Notifications - Get feedback for actions like applying to jobs
+- 🔄 Auto-Rotating Suggestions - AI suggestions scroll every 5 seconds
 
-### Click to Interact:
-- ✅ **Toggle Tasks**: Click any roadmap task to mark complete/incomplete
-- 🎯 **Hover Effects**: All cards have smooth hover transitions
-- 📊 **Progress Tracking**: Real-time progress bars update as you complete tasks
-- 🎨 **Color-Coded UI**: Visual indicators for priority, status, and fit levels
-
-## 📱 Responsive Design
-
-The dashboard is fully responsive and adapts to:
-- Desktop (1920px+)
-- Laptop (1024px - 1919px)
-- Tablet (768px - 1023px)
-- Mobile (320px - 767px)
-
-## 🚀 Next Steps (Future Enhancements)
+### 🚀 Next Steps (Future Enhancements)
 
 - [ ] Add backend API integration
 - [ ] Implement user authentication
@@ -111,50 +106,6 @@ The dashboard is fully responsive and adapts to:
 - [ ] Dark mode toggle
 - [ ] Export/PDF generation
 - [ ] Advanced filtering and search
-
-## 📄 Project Structure
-
-```
-cdc-dashboard/
-├── app/
-│   ├── page.tsx          # Main dashboard page
-│   ├── layout.tsx        # Root layout
-│   └── globals.css       # Global styles
-├── components/
-│   └── ui/               # shadcn/ui components
-│       ├── card.tsx
-│       ├── badge.tsx
-│       ├── button.tsx
-│       ├── progress.tsx
-│       ├── tabs.tsx
-│       ├── avatar.tsx
-│       └── separator.tsx
-├── lib/
-│   ├── mock-data.ts      # Mock data for dashboard
-│   └── utils.ts          # Utility functions
-└── public/               # Static assets
-```
-
-## 🎨 Color Scheme
-
-- **Primary**: Blue-Purple gradient (#3B82F6 → #9333EA)
-- **Fit Levels**:
-  - High: Green (#22C55E)
-  - Medium: Yellow (#EAB308)
-  - Low: Gray (#6B7280)
-- **Priorities**:
-  - High: Red (#DC2626)
-  - Medium: Orange (#F97316)
-  - Low: Gray (#6B7280)
-
-## 💡 Key Components
-
-- **Student Header**: Shows profile info and avatar
-- **Welcome Section**: Personalized greeting with quick stats
-- **Role Cards**: Detailed role information with skill matching
-- **Application Pipeline**: Visual status tracking
-- **Deadline Cards**: Time-sensitive information display
-- **AI Task List**: Interactive checklist with progress
 
 ---
 

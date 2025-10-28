@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>CDC Lucid Board – Final Task Hierarchy</title>
+
+<style>
+
+  body {
+
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+
+    background: #f6f8fa;
+
+    margin: 0;
+
+    padding: 0;
+
+  }
+
+
+
+  header {
+
+    background-color: #1e293b;
+
+    color: #fff;
+
+    padding: 20px 40px;
+
+    text-align: center;
+
+  }
+
+
+
+  header h1 {
+
+    margin: 0;
+
+    font-size: 26px;
+
+  }
+
+
+
+  header p {
+
+    margin: 6px 0 0;
+
+    font-size: 14px;
+
+    color: #cbd5e1;
+
+  }
+
+
+
+  table {
+
+    width: 95%;
+
+    margin: 30px auto;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+
+  }
+
+
+
+  th, td {
+
+    border: 2px solid #e2e8f0;
+
+    vertical-align: top;
+
+    padding: 15px;
+
+  }
+
+
+
+  th {
+
+    text-align: center;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #1e293b;
+
+  }
+
+
+
+  /* Column colors */
+
+  th.large { background-color: #c7d2fe; }
+
+  th.medium { background-color: #fef9c3; }
+
+  th.small { background-color: #bbf7d0; }
+
+
+
+  /* Row header */
+
+  td.rowHeader {
+
+    width: 180px;
+
+    font-weight: 600;
+
+    text-align: center;
+
+    background-color: #f1f5f9;
+
+  }
+
+
+
+  /* Column colors for task blocks */
+
+  .largeCol { background-color: #ede9fe; }
+
+  .mediumCol { background-color: #fefce8; }
+
+  .smallCol { background-color: #ecfdf5; }
+
+
+
+  /* Card styling */
+
+  .card {
+
+    background-color: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    padding: 10px 12px;
+
+    margin-bottom: 10px;
+
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+
+    transition: all 0.2s ease;
+
+  }
+
+
+
+  .card:hover {
+
+    transform: scale(1.02);
+
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+
+  }
+
+
+
+  .card h4 {
+
+    margin: 0 0 5px;
+
+    font-size: 15px;
+
+    color: #1e293b;
+
+  }
+
+
+
+  .card p {
+
+    font-size: 13px;
+
+    color: #475569;
+
+    margin: 0 0 5px;
+
+  }
+
+
+
+  /* Status & owner chips */
+
+  .tag {
+
+    display: inline-block;
+
+    padding: 3px 8px;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+
+    color: #fff;
+
+    margin-right: 4px;
+
+  }
+
+
+
+  .todo { background-color: #64748b; }
+
+  .progress { background-color: #fbbf24; color: #1e293b; }
+
+  .done { background-color: #22c55e; }
+
+  .owner {
+
+    background-color: #3b82f6;
+
+  }
+
+
+
+  footer {
+
+    margin: 40px 0 20px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #64748b;
+
+  }
+
+
+
+  /* Legend */
+
+  .legend {
+
+    width: 95%;
+
+    margin: 30px auto;
+
+    display: flex;
+
+    justify-content: space-around;
+
+  }
+
+
+
+  .legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+  }
+
+
+
+  .legend-box {
+
+    width: 20px;
+
+    height: 20px;
+
+    border-radius: 4px;
+
+    margin-right: 8px;
+
+  }
+
+
+
+  .purple { background-color: #c7d2fe; }
+
+  .yellow { background-color: #fef9c3; }
+
+  .green { background-color: #bbf7d0; }
+
+
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<header>
+
+  <h1>🎓 Student-Centric CDC Platform – Final Task Hierarchy</h1>
+
+  <p>Interaction Design Project | Team: Krish Patel, Parth Akholkar, Subhangi, Gouri</p>
+
+</header>
+
+
+
+<table>
+
+  <tr>
+
+    <th></th>
+
+    <th class="large">Large Tasks</th>
+
+    <th class="medium">Medium</th>
+
+    <th class="small">Small</th>
+
+  </tr>
+
+
+
+  <!-- Student Portal -->
+
+  <tr>
+
+    <td class="rowHeader">Student Portal</td>
+
+    <td class="largeCol">
+
+      <div class="card">
+
+        <h4>Resume Builder</h4>
+
+        <p>Centralized place to create and edit resumes with live feedback.</p>
+
+        <span class="tag todo">To Do</span><span class="tag owner">Krish</span>
+
+      </div>
+
+    </td>
+
+    <td class="mediumCol">
+
+      <div class="card">
+
+        <h4>Resume Templates & References</h4>
+
+        <p>Sample formats for each domain type.</p>
+
+        <span class="tag progress">In Progress</span><span class="tag owner">Parth</span>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Auto Resume Formatter</h4>
+
+        <p>Ensures clean, ATS-friendly structure.</p>
+
+        <span class="tag todo">To Do</span><span class="tag owner">Subhangi</span>
+
+      </div>
+
+    </td>
+
+    <td class="smallCol">
+
+      <div class="card">
+
+        <h4>Progress Bar</h4>
+
+        <p>Shows resume completion status.</p>
+
+        <span class="tag done">Done</span>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Spell Checker</h4>
+
+        <p>Real-time grammar and typo correction.</p>
+
+        <span class="tag done">Done</span>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Compare Resume with Top Resumes</h4>
+
+        <p>Benchmark resume with top alumni/batch profiles.</p>
+
+        <span class="tag done">Done</span>
+
+      </div>
+
+    </td>
+
+  </tr>
+
+
+
+  <!-- Mentorship Hub -->
+
+  <tr>
+
+    <td class="rowHeader">Mentorship Hub</td>
+
+    <td class="largeCol">
+
+      <div class="card">
+
+        <h4>Mentorship Hub</h4>
+
+        <p>Connects students to mentors and alumni for personalized help.</p>
+
+        <span class="tag todo">To Do</span><span class="tag owner">Gouri</span>
+
+      </div>
+
+    </td>
+
+    <td class="mediumCol">
+
+      <div class="card">
+
+        <h4>Company Past Data</h4>
+
+        <p>Displays previous hiring records.</p>
+
+        <span class="tag todo">To Do</span>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Company Database</h4>
+
+        <p>Central list of employers and contacts.</p>
+
+        <span class="tag todo">To Do</span>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Company Future Data</h4>
+
+        <p>Forecasts upcoming openings and opportunities.</p>
+
+        <span class="tag todo">To Do</span>
+
+      </div>
+
+    </td>
+
+    <td class="smallCol">
+
+      <div class="card">
+
+        <h4>Progress Bar UI Feature</h4>
+
+        <p>Tracks mentorship completion progress.</p>
+
+        <span class="tag progress">In Progress</span>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Company Connect Button</h4>
+
+        <p>Allows mentors to tag opportunities.</p>
+
+        <span class="tag todo">To Do</span>
+
+      </div>
+
+    </td>
+
+  </tr>
+
+
+
+  <!-- AI Roadmap Coach -->
+
+  <tr>
+
+    <td class="rowHeader">AI Roadmap Coach</td>
+
+    <td class="largeCol">
+
+      <div class="card">
+
+        <h4>AI Roadmap Coach</h4>
+
+        <p>Guides students through semester-wise learning & growth paths.</p>
+
+        <span class="tag progress">In Progress</span><span class="tag owner">Parth</span>
+
+      </div>
+
+    </td>
+
+    <td class="mediumCol">
+
+      <div class="card">
+
+        <h4>Template References</h4>
+
+        <p>Pre-built plans for different courses and timelines.</p>
+
+        <span class="tag progress">In Progress</span>
+
+      </div>
+
+      <div class="card">
+
+        <h4>ATS Checker</h4>
+
+        <p>Analyzes resume keywords for role match.</p>
+
+        <span class="tag done">Done</span>
+
+      </div>
+
+    </td>
+
+    <td class="smallCol">
+
+      <div class="card">
+
+        <h4>Smart Suggestion Bot</h4>
+
+        <p>Sends weekly nudges to improve CV and skills.</p>
+
+        <span class="tag todo">To Do</span>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Deadline Reminder Widget</h4>
+
+        <p>Auto reminders for deadlines.</p>
+
+        <span class="tag todo">To Do</span>
+
+      </div>
+
+    </td>
+
+  </tr>
+
+
+
+  <!-- CDC Communications -->
+
+  <tr>
+
+    <td class="rowHeader">CDC Communications</td>
+
+    <td class="largeCol">
+
+      <div class="card">
+
+        <h4>Communications from CDC</h4>
+
+        <p>Centralized CDC announcements and alerts.</p>
+
+        <span class="tag todo">To Do</span><span class="tag owner">Subhangi</span>
+
+      </div>
+
+    </td>
+
+    <td class="mediumCol">
+
+      <div class="card">
+
+        <h4>Communication Scheduler</h4>
+
+        <p>Automates weekly updates and alerts.</p>
+
+        <span class="tag progress">In Progress</span>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Analytics Tracker</h4>
+
+        <p>Tracks engagement and open rates for mails.</p>
+
+        <span class="tag todo">To Do</span>
+
+      </div>
+
+    </td>
+
+    <td class="smallCol">
+
+      <div class="card">
+
+        <h4>Under Employer Dashboard</h4>
+
+        <p>Employers can view analytics and engagement data.</p>
+
+        <span class="tag done">Done</span>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Quick Reply Buttons</h4>
+
+        <p>Students can RSVP or ask questions directly.</p>
+
+        <span class="tag todo">To Do</span>
+
+      </div>
+
+    </td>
+
+  </tr>
+
+
+
+</table>
+
+
+
+<div class="legend">
+
+  <div class="legend-item">
+
+    <div class="legend-box purple"></div> Large Tasks
+
+  </div>
+
+  <div class="legend-item">
+
+    <div class="legend-box yellow"></div> Medium Tasks
+
+  </div>
+
+  <div class="legend-item">
+
+    <div class="legend-box green"></div> Small Tasks
+
+  </div>
+
+</div>
+
+
+
+<footer>Created for Interaction Design Project | Ahmedabad University | 2025</footer>
+
+
+
+</body>
+
+</html>
+
