@@ -5,11 +5,11 @@
       "headers": [
         {
           "key": "X-Frame-Options",
-          "value": "ALLOWALL"
+          "value": "SAMEORIGIN"
         },
         {
           "key": "Content-Security-Policy",
-          "value": "frame-ancestors *"
+          "value": "frame-ancestors 'self' https://*.lucid.app https://*.lucidspark.com https://*.lucidchart.com https://lucid.app https://lucidspark.com https://lucidchart.com *"
         }
       ]
     }
