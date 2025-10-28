@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronRight, CheckCircle2, Briefcase, Target, Users, Map, MessageSquare, FileCompare, FileText, Sparkles } from "lucide-react";
+import { X, ChevronRight, CheckCircle2, Briefcase, Target, Users, Map, MessageSquare, Sparkles } from "lucide-react";
 
 interface StartupGuideProps {
   isOpen: boolean;
