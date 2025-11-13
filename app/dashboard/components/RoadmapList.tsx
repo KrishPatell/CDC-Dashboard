@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, Circle } from "lucide-react";
 import { motion } from "framer-motion";
 import type { RoadmapTask } from "@/lib/mockData";
@@ -23,13 +24,7 @@ export default function RoadmapList({ tasks, toggleTask }: RoadmapListProps) {
             {completedCount}/{tasks.length}
           </span>
         </CardTitle>
-        <div className="w-full bg-slate-200 rounded-full h-2 mt-2">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            className="bg-blue-600 h-2 rounded-full transition-all"
-          />
-        </div>
+        <Progress value={progress} className="mt-2" />
       </CardHeader>
       <CardContent className="space-y-2">
         {tasks.map((task, idx) => (

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronRight, CheckCircle2, Briefcase, Target, Users, Map, MessageSquare, Sparkles } from "lucide-react";
+import { X, ChevronRight, CheckCircle2, Briefcase, Target, Users, Map, Sparkles } from "lucide-react";
 
 interface StartupGuideProps {
   isOpen: boolean;
@@ -68,11 +68,18 @@ export default function StartupGuide({ isOpen, onClose }: StartupGuideProps) {
   const [isFirstVisit, setIsFirstVisit] = useState(false);
 
   useEffect(() => {
-    // Check if this is the user's first visit
-    const hasVisited = localStorage.getItem("hasVisitedDashboard");
-    if (!hasVisited && isOpen) {
-      setIsFirstVisit(true);
+    if (!isOpen) {
+      return;
     }
+
+    const hasVisited = localStorage.getItem("hasVisitedDashboard");
+    if (hasVisited) {
+      return;
+    }
+
+    const frame = requestAnimationFrame(() => setIsFirstVisit(true));
+
+    return () => cancelAnimationFrame(frame);
   }, [isOpen]);
 
   const handleNext = () => {
@@ -91,11 +98,13 @@ export default function StartupGuide({ isOpen, onClose }: StartupGuideProps) {
 
   const handleFinish = () => {
     localStorage.setItem("hasVisitedDashboard", "true");
+    setIsFirstVisit(false);
     onClose();
   };
 
   const handleSkip = () => {
     localStorage.setItem("hasVisitedDashboard", "true");
+    setIsFirstVisit(false);
     onClose();
   };
 

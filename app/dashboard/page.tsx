@@ -1,16 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import JobCard from "./components/JobCard";
+import JobFilter, { type FilterState } from "./components/JobFilter";
 import KanbanBoard from "./components/KanbanBoard";
 import RoadmapList from "./components/RoadmapList";
 import SuggestionsWidget from "./components/SuggestionsWidget";
 import AlumniList from "./components/AlumniList";
-import Toast from "./components/Toast";
 import StartupGuide from "./components/StartupGuide";
+import JobDetailsModal from "./components/JobDetailsModal";
 import {
   jobs,
   roadmapTasks as initialTasks,
@@ -24,30 +26,42 @@ export default function DashboardPage() {
   const [activeView, setActiveView] = useState("home");
   const [tasks, setTasks] = useState<RoadmapTask[]>(initialTasks);
   const [applications, setApplications] = useState<Application[]>(initialApplications);
-  const [toastMessage, setToastMessage] = useState("");
-  const [showToast, setShowToast] = useState(false);
   const [showStartupGuide, setShowStartupGuide] = useState(false);
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [showJobModal, setShowJobModal] = useState(false);
+  const [filters, setFilters] = useState<FilterState>({
+    timing: [],
+    jobType: [],
+    fit: [],
+  });
 
-  // Load tasks from localStorage on mount
   useEffect(() => {
     const savedTasks = localStorage.getItem("roadmapTasks");
-    if (savedTasks) {
-      setTasks(JSON.parse(savedTasks));
+    if (!savedTasks) {
+      return;
     }
+
+    const frame = requestAnimationFrame(() => {
+      try {
+        setTasks(JSON.parse(savedTasks));
+      } catch (error) {
+        console.error("Failed to parse roadmapTasks from localStorage", error);
+        localStorage.removeItem("roadmapTasks");
+      }
+    });
+
+    return () => cancelAnimationFrame(frame);
   }, []);
 
-  // Check if this is a new user and show startup guide
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedDashboard");
     if (!hasVisited) {
-      // Show the guide after a short delay for better UX
       setTimeout(() => {
         setShowStartupGuide(true);
       }, 1000);
     }
   }, []);
 
-  // Save tasks to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem("roadmapTasks", JSON.stringify(tasks));
   }, [tasks]);
@@ -61,10 +75,9 @@ export default function DashboardPage() {
   };
 
   const handleApply = (job: Job) => {
-    // Check if already applied
     const alreadyApplied = applications.some((app) => app.jobId === job.id);
     if (alreadyApplied) {
-      showToastMessage("You've already applied to this role!");
+      toast.info("You've already applied to this role!");
       return;
     }
 
@@ -77,52 +90,118 @@ export default function DashboardPage() {
     };
 
     setApplications([...applications, newApplication]);
-    showToastMessage(`Application added to tracker: ${job.company}!`);
+    toast.success(`Application added to tracker: ${job.company}!`);
   };
 
   const handleConnect = (name: string) => {
-    showToastMessage(`Chat request sent to ${name}!`);
+    toast.success(`Chat request sent to ${name}!`);
   };
 
-  const showToastMessage = (message: string) => {
-    setToastMessage(message);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
+  const handleViewJobDetails = (job: Job) => {
+    setSelectedJob(job);
+    setShowJobModal(true);
+  };
+
+  const getFilteredJobs = () => {
+    return jobs.filter((job) => {
+      // Check timing filter
+      if (filters.timing.length > 0) {
+        const postedDays = job.postedDaysAgo || 0;
+        const timingMatch = filters.timing.some((timing) => {
+          switch (timing) {
+            case "recent":
+              return postedDays <= 7;
+            case "week":
+              return postedDays > 7 && postedDays <= 14;
+            case "month":
+              return postedDays > 14 && postedDays <= 30;
+            case "older":
+              return postedDays > 30;
+            default:
+              return false;
+          }
+        });
+        if (!timingMatch) return false;
+      }
+
+      // Check job type filter
+      if (filters.jobType.length > 0) {
+        const jobTypeNormalized = job.jobType?.toLowerCase() || "";
+        const jobTypeMatch = filters.jobType.some((type) => {
+          switch (type) {
+            case "internship":
+              return jobTypeNormalized.includes("internship");
+            case "fulltime":
+              return jobTypeNormalized.includes("full-time") || jobTypeNormalized.includes("fulltime");
+            case "parttime":
+              return jobTypeNormalized.includes("part-time") || jobTypeNormalized.includes("parttime");
+            default:
+              return false;
+          }
+        });
+        if (!jobTypeMatch) return false;
+      }
+
+      // Check fit filter
+      if (filters.fit.length > 0) {
+        const fitNormalized = job.fit?.toLowerCase() || "";
+        const fitMatch = filters.fit.some((f) => {
+          switch (f) {
+            case "high":
+              return fitNormalized === "high";
+            case "medium":
+              return fitNormalized === "medium";
+            case "low":
+              return fitNormalized === "low";
+            default:
+              return false;
+          }
+        });
+        if (!fitMatch) return false;
+      }
+
+      return true;
+    });
   };
 
   const renderView = () => {
     if (activeView === "home") {
-      return (
+  return (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="space-y-6"
         >
-          {/* Welcome Section */}
           <div>
             <h1 className="text-3xl font-bold text-slate-900 mb-2">
               Welcome back, Priya! 👋
             </h1>
-            <p className="text-slate-600">
+          <p className="text-slate-600">
               You have {applications.length} active applications and{" "}
               {tasks.filter((t) => !t.done).length} pending tasks.
             </p>
-          </div>
+                    </div>
 
-          {/* Eligibility & Fit Roles */}
           <div>
-            <h2 className="text-xl font-semibold text-slate-900 mb-4">
-              Eligibility & Fit Roles
-            </h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-slate-900">
+                Eligibility & Fit Roles
+              </h2>
+              <JobFilter onFilterChange={setFilters} activeFilters={filters} />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {jobs.map((job) => (
-                <JobCard key={job.id} job={job} onApply={handleApply} />
+              {getFilteredJobs().map((job) => (
+                <JobCard key={job.id} job={job} onApply={handleApply} onViewDetails={handleViewJobDetails} />
               ))}
             </div>
+            {getFilteredJobs().length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-slate-500 text-lg">No jobs match your filters. Try adjusting your criteria.</p>
+              </div>
+            )}
           </div>
 
-          {/* Application Tracker */}
-          <div>
+                  <div>
             <h2 className="text-xl font-semibold text-slate-900 mb-4">
               Application Tracker
             </h2>
@@ -130,21 +209,19 @@ export default function DashboardPage() {
               applications={applications}
               setApplications={setApplications}
             />
-          </div>
+                        </div>
 
-          {/* Bottom Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <RoadmapList tasks={tasks} toggleTask={toggleTask} />
             <SuggestionsWidget />
             <AlumniList onConnect={handleConnect} />
-          </div>
-        </motion.div>
+                    </div>
+                  </motion.div>
       );
     }
 
-    // Placeholder views for other menu items
     return (
-      <motion.div
+                    <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="flex items-center justify-center h-96"
@@ -154,8 +231,8 @@ export default function DashboardPage() {
             {activeView.charAt(0).toUpperCase() + activeView.slice(1)}
           </h2>
           <p className="text-slate-600">This view is coming soon!</p>
-        </div>
-      </motion.div>
+                      </div>
+                    </motion.div>
     );
   };
 
@@ -168,11 +245,17 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto">{renderView()}</div>
       </main>
 
-      <Toast message={toastMessage} show={showToast} onClose={() => setShowToast(false)} />
-      
-      <StartupGuide 
-        isOpen={showStartupGuide} 
-        onClose={() => setShowStartupGuide(false)} 
+      <StartupGuide
+        isOpen={showStartupGuide}
+        onClose={() => setShowStartupGuide(false)}
+      />
+
+      <JobDetailsModal
+        job={selectedJob}
+        open={showJobModal}
+        onClose={() => setShowJobModal(false)}
+        onApply={handleApply}
+        onConnect={handleConnect}
       />
     </div>
   );

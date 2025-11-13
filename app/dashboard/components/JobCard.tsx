@@ -3,65 +3,186 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Building2, MapPin, IndianRupee } from "lucide-react";
+import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import type { Job } from "@/lib/mockData";
 
 interface JobCardProps {
   job: Job;
   onApply: (job: Job) => void;
+  onViewDetails?: (job: Job) => void;
 }
 
-export default function JobCard({ job, onApply }: JobCardProps) {
-  const getFitColor = (fit: string) => {
-    switch (fit) {
-      case "High":
-        return "bg-green-100 text-green-700 border-green-200";
-      case "Medium":
-        return "bg-yellow-100 text-yellow-700 border-yellow-200";
-      case "Low":
-        return "bg-red-100 text-red-700 border-red-200";
+export default function JobCard({ job, onApply, onViewDetails }: JobCardProps) {
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  const getJobLevelColor = (level?: string) => {
+    switch (level) {
+      case "Entry Level":
+        return "bg-purple-100 text-purple-700 border-purple-200";
+      case "Intermediate":
+        return "bg-purple-100 text-purple-700 border-purple-200";
+      case "Expert":
+        return "bg-purple-100 text-purple-700 border-purple-200";
       default:
-        return "bg-gray-100 text-gray-700 border-gray-200";
+        return "bg-purple-100 text-purple-700 border-purple-200";
     }
+  };
+
+  const getJobTypeColor = (type?: string) => {
+    if (type?.toLowerCase().includes("part")) {
+      return "bg-green-100 text-green-700 border-green-200";
+    }
+    return "bg-green-100 text-green-700 border-green-200";
+  };
+
+  const getRemoteColor = () => {
+    return "bg-orange-100 text-orange-700 border-orange-200";
+  };
+
+  const truncateDescription = (text: string, maxLength: number = 80) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
+
+  const formatSalary = (ctc: string) => {
+    // Convert ₹6-8 LPA to $250/hr format for display
+    // For now, we'll keep the original format or convert it
+    return ctc;
   };
 
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300 }}
+      className="relative"
     >
-      <Card className="hover:shadow-md transition-shadow">
-        <CardContent className="p-4">
-          <div className="flex items-start justify-between mb-3">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <Building2 className="h-4 w-4 text-slate-600" />
-                <h3 className="font-semibold text-slate-900">{job.company}</h3>
+      <Card className="hover:shadow-lg transition-all duration-200 border-slate-200 bg-white h-[280px] flex flex-col !gap-0 !py-0">
+        <CardContent className="p-4 flex flex-col flex-1 !px-4">
+          {/* Heart Icon - Top Right */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsFavorited(!isFavorited);
+            }}
+            className="absolute top-3 right-3 p-1.5 hover:bg-slate-100 rounded-full transition-colors z-10"
+            aria-label="Favorite"
+          >
+            <Heart
+              className={`h-4 w-4 ${
+                isFavorited
+                  ? "fill-red-500 text-red-500"
+                  : "text-slate-400 hover:text-red-500"
+              } transition-colors`}
+            />
+          </button>
+
+          {/* Logo and Job Info - Side by Side */}
+          <div className="flex items-start gap-3 mb-3 pr-8">
+            {/* Company Logo - Smaller */}
+            <div className="flex-shrink-0">
+              <div className="h-12 w-12 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden">
+                {job.logoUrl ? (
+                  <img
+                    src={job.logoUrl}
+                    alt={`${job.company} logo`}
+                    className="object-contain p-1.5 w-full h-full"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      const parent = target.parentElement;
+                      if (parent) {
+                        target.style.display = "none";
+                        const fallback = document.createElement("span");
+                        fallback.className = "text-lg font-bold text-slate-600";
+                        fallback.textContent = job.company.charAt(0);
+                        parent.appendChild(fallback);
+                      }
+                    }}
+                  />
+                ) : (
+                  <span className="text-lg font-bold text-slate-600">
+                    {job.company.charAt(0)}
+                  </span>
+                )}
               </div>
-              <p className="text-sm text-slate-700 font-medium">{job.title}</p>
             </div>
-            <Badge variant="outline" className={getFitColor(job.fit)}>
-              {job.fit} Fit
-            </Badge>
-          </div>
 
-          <p className="text-xs text-slate-600 mb-3">{job.description}</p>
-
-          <div className="flex items-center gap-3 text-xs text-slate-600 mb-3">
-            <div className="flex items-center gap-1">
-              <MapPin className="h-3.5 w-3.5" />
-              {job.location}
-            </div>
-            <div className="flex items-center gap-1">
-              <IndianRupee className="h-3.5 w-3.5" />
-              {job.ctc}
+            {/* Job Title and Company Info */}
+            <div className="flex-1 min-w-0">
+              <h3 className="text-base font-semibold text-slate-900 mb-1 leading-tight">
+                {job.title}
+              </h3>
+              <p className="text-xs text-slate-600">
+                {job.company} • {job.applicants || 0} Applicants
+              </p>
             </div>
           </div>
 
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {job.jobLevel && (
+              <Badge
+                variant="outline"
+                className={`text-xs px-2 py-0.5 ${getJobLevelColor(
+                  job.jobLevel
+                )}`}
+              >
+                {job.jobLevel}
+              </Badge>
+            )}
+            {job.jobType && (
+              <Badge
+                variant="outline"
+                className={`text-xs px-2 py-0.5 ${getJobTypeColor(
+                  job.jobType
+                )}`}
+              >
+                {job.jobType}
+              </Badge>
+            )}
+            {job.isRemote !== undefined && (
+              <Badge
+                variant="outline"
+                className={`text-xs px-2 py-0.5 ${getRemoteColor()}`}
+              >
+                {job.isRemote ? "Remote" : "On-site"}
+              </Badge>
+            )}
+          </div>
+
+          {/* Description - Fixed height to ensure consistent card height */}
+          <div className="flex-1 min-h-[48px] mb-3">
+            <p className="text-xs text-slate-700 leading-relaxed overflow-hidden h-full" style={{
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+            }}>
+              {truncateDescription(job.description, 70)}
+            </p>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-slate-200 my-3 flex-shrink-0"></div>
+
+          {/* Salary & Posted Date */}
+          <div className="flex items-center justify-between mb-3 flex-shrink-0">
+            <div>
+              <p className="text-sm font-semibold text-slate-900">
+                {formatSalary(job.ctc)}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500">
+                Posted {job.postedDaysAgo || 0} days ago
+              </p>
+            </div>
+          </div>
+
+          {/* Apply Button */}
           <Button
-            onClick={() => onApply(job)}
-            className="w-full bg-blue-600 hover:bg-blue-700"
+            onClick={() => (onViewDetails ? onViewDetails(job) : onApply(job))}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white flex-shrink-0"
             size="sm"
           >
             Apply Now
@@ -71,4 +192,3 @@ export default function JobCard({ job, onApply }: JobCardProps) {
     </motion.div>
   );
 }
-

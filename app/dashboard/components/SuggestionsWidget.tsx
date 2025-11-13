@@ -8,7 +8,7 @@ import { suggestions } from "@/lib/mockData";
 
 export default function SuggestionsWidget() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const visibleCount = 3; // Show 3-4 suggestions at once
+  const visibleCount = 5; // Show 5 suggestions at once
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,12 +43,12 @@ export default function SuggestionsWidget() {
   return (
     <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-blue-200">
       <CardHeader>
-        <CardTitle className="text-lg flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-blue-600" />
+        <CardTitle className="text-base flex items-center gap-2">
+          <Sparkles className="h-4 w-4 text-blue-600" />
           AI Suggestions
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pb-6">
         <div className="space-y-2">
           <AnimatePresence mode="wait">
             {visibleSuggestions.map((suggestion, idx) => (
@@ -58,9 +58,9 @@ export default function SuggestionsWidget() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.3, delay: idx * 0.1 }}
-                className="bg-white p-3 rounded-lg border border-blue-200"
+                className="bg-white/95 p-2.5 rounded-lg border border-blue-200 shadow-sm"
               >
-                <p className="text-xs text-slate-700">
+                <p className="text-xs font-medium text-slate-700 leading-snug">
                   💡 {suggestion.text}
                 </p>
               </motion.div>
