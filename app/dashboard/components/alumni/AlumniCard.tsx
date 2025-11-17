@@ -149,12 +149,12 @@ export default function AlumniCard({ alumni, onConnect, onViewProfile }: AlumniC
                 </p>
               )}
 
-              <div className="flex gap-2 mt-4">
+              <div className="flex flex-col sm:flex-row gap-2 mt-4">
                 <Button
                   onClick={() => onConnect(alumni)}
                   disabled={isConnectionDisabled}
                   size="sm"
-                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  className="w-full sm:flex-1 bg-blue-600 hover:bg-blue-700"
                   variant={isConnectionDisabled ? "outline" : "default"}
                 >
                   <MessageCircle className="h-4 w-4 mr-2" />
@@ -164,7 +164,7 @@ export default function AlumniCard({ alumni, onConnect, onViewProfile }: AlumniC
                   onClick={() => onViewProfile(alumni)}
                   size="sm"
                   variant="outline"
-                  className="flex-1"
+                  className="w-full sm:flex-1"
                 >
                   View Profile
                 </Button>
