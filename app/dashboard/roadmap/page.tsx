@@ -82,6 +82,11 @@ export default function RoadmapCoachPage() {
 
   const handleSidebarNavigation = (view: string) => {
     // Navigate directly to the appropriate route
+    if (view === "roadmap") {
+      // Already on roadmap page, do nothing
+      return;
+    }
+    
     if (view === "home") {
       router.push("/dashboard");
     } else if (view === "applications") {
@@ -92,9 +97,6 @@ export default function RoadmapCoachPage() {
       router.push("/dashboard/comparator");
     } else if (view === "alumni") {
       router.push("/dashboard/alumni");
-    } else if (view === "roadmap") {
-      // Already on roadmap page, do nothing
-      return;
     }
   };
 

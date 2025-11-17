@@ -116,6 +116,11 @@ export default function AlumniFinderPage() {
 
   const handleSidebarNavigation = (view: string) => {
     // Navigate directly to the appropriate route
+    if (view === "alumni") {
+      // Already on alumni page, do nothing
+      return;
+    }
+    
     if (view === "home") {
       router.push("/dashboard");
     } else if (view === "applications") {
@@ -126,9 +131,6 @@ export default function AlumniFinderPage() {
       router.push("/dashboard/comparator");
     } else if (view === "roadmap") {
       router.push("/dashboard/roadmap");
-    } else if (view === "alumni") {
-      // Already on alumni page, do nothing
-      return;
     }
   };
 

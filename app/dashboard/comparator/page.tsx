@@ -65,6 +65,11 @@ export default function CVComparatorPage() {
 
   const handleSidebarNavigation = (view: string) => {
     // Navigate directly to the appropriate route
+    if (view === "comparator") {
+      // Already on comparator page, do nothing
+      return;
+    }
+    
     if (view === "home") {
       router.push("/dashboard");
     } else if (view === "applications") {
@@ -75,9 +80,6 @@ export default function CVComparatorPage() {
       router.push("/dashboard/alumni");
     } else if (view === "roadmap") {
       router.push("/dashboard/roadmap");
-    } else if (view === "comparator") {
-      // Already on comparator page, do nothing
-      return;
     }
   };
 
