@@ -175,7 +175,12 @@ export default function JobApplicationPage() {
   };
 
   const handleSidebarNavigation = (view: string) => {
-    // Navigate directly to the appropriate route
+    if (view === activeView) {
+      return;
+    }
+
+    setActiveView(view);
+
     if (view === "home") {
       router.push("/dashboard");
     } else if (view === "applications") {

@@ -115,12 +115,12 @@ export default function AlumniFinderPage() {
   );
 
   const handleSidebarNavigation = (view: string) => {
-    // Navigate directly to the appropriate route
-    if (view === "alumni") {
-      // Already on alumni page, do nothing
+    if (view === activeView) {
       return;
     }
-    
+
+    setActiveView(view);
+
     if (view === "home") {
       router.push("/dashboard");
     } else if (view === "applications") {

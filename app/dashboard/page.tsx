@@ -191,6 +191,8 @@ function DashboardContent() {
   };
 
   const handleViewChange = (view: string) => {
+    setActiveView(view);
+
     // Navigate to dedicated pages directly without setting state first
     if (view === "alumni") {
       router.push("/dashboard/alumni");

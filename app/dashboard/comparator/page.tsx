@@ -64,12 +64,12 @@ export default function CVComparatorPage() {
   }, [comparisonHistory]);
 
   const handleSidebarNavigation = (view: string) => {
-    // Navigate directly to the appropriate route
-    if (view === "comparator") {
-      // Already on comparator page, do nothing
+    if (view === activeView) {
       return;
     }
-    
+
+    setActiveView(view);
+
     if (view === "home") {
       router.push("/dashboard");
     } else if (view === "applications") {

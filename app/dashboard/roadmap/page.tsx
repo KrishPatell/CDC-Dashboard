@@ -81,12 +81,12 @@ export default function RoadmapCoachPage() {
   }, [skillGoals]);
 
   const handleSidebarNavigation = (view: string) => {
-    // Navigate directly to the appropriate route
-    if (view === "roadmap") {
-      // Already on roadmap page, do nothing
+    if (view === activeView) {
       return;
     }
-    
+
+    setActiveView(view);
+
     if (view === "home") {
       router.push("/dashboard");
     } else if (view === "applications") {
