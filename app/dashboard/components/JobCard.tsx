@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import type { Job } from "@/lib/mockData";
 
 interface JobCardProps {
@@ -15,7 +16,13 @@ interface JobCardProps {
 }
 
 export default function JobCard({ job, onApply, onViewDetails }: JobCardProps) {
+  const router = useRouter();
   const [isFavorited, setIsFavorited] = useState(false);
+
+  const handleApplyClick = () => {
+    // Navigate to the full page job application
+    router.push(`/dashboard/jobs/${job.id}`);
+  };
 
   const getJobLevelColor = (level?: string) => {
     switch (level) {
@@ -41,11 +48,6 @@ export default function JobCard({ job, onApply, onViewDetails }: JobCardProps) {
     return "bg-orange-100 text-orange-700 border-orange-200";
   };
 
-  const truncateDescription = (text: string, maxLength: number = 80) => {
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + "...";
-  };
-
   const formatSalary = (ctc: string) => {
     // Convert ₹6-8 LPA to $250/hr format for display
     // For now, we'll keep the original format or convert it
@@ -58,8 +60,8 @@ export default function JobCard({ job, onApply, onViewDetails }: JobCardProps) {
       transition={{ type: "spring", stiffness: 300 }}
       className="relative"
     >
-      <Card className="hover:shadow-lg transition-all duration-200 border-slate-200 bg-white h-[280px] flex flex-col !gap-0 !py-0">
-        <CardContent className="p-4 flex flex-col flex-1 !px-4">
+      <Card className="hover:shadow-lg transition-all duration-200 border-slate-200 bg-white min-h-[300px] flex flex-col !gap-0 !py-0">
+        <CardContent className="p-5 pb-4 flex flex-col flex-1 !px-5">
           {/* Heart Icon - Top Right */}
           <button
             onClick={(e) => {
@@ -147,18 +149,14 @@ export default function JobCard({ job, onApply, onViewDetails }: JobCardProps) {
                 className={`text-xs px-2 py-0.5 ${getRemoteColor()}`}
               >
                 {job.isRemote ? "Remote" : "On-site"}
-              </Badge>
+            </Badge>
             )}
           </div>
 
-          {/* Description - Fixed height to ensure consistent card height */}
-          <div className="flex-1 min-h-[48px] mb-3">
-            <p className="text-xs text-slate-700 leading-relaxed overflow-hidden h-full" style={{
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-            }}>
-              {truncateDescription(job.description, 70)}
+          {/* Description */}
+          <div className="flex-none mb-2 px-1">
+            <p className="text-sm text-slate-700 leading-relaxed line-clamp-2">
+              {job.fullDescription || job.description}
             </p>
           </div>
 
@@ -166,22 +164,22 @@ export default function JobCard({ job, onApply, onViewDetails }: JobCardProps) {
           <div className="border-t border-slate-200 my-3 flex-shrink-0"></div>
 
           {/* Salary & Posted Date */}
-          <div className="flex items-center justify-between mb-3 flex-shrink-0">
+          <div className="flex items-center justify-between mb-2 flex-shrink-0 text-xs text-slate-600">
             <div>
               <p className="text-sm font-semibold text-slate-900">
                 {formatSalary(job.ctc)}
               </p>
             </div>
-            <div>
-              <p className="text-xs text-slate-500">
-                Posted {job.postedDaysAgo || 0} days ago
-              </p>
+            <div className="flex items-center gap-3">
+              {job.location && <span>{job.location}</span>}
+              <span>•</span>
+              <span>Posted {job.postedDaysAgo || 0} days ago</span>
             </div>
           </div>
 
           {/* Apply Button */}
           <Button
-            onClick={() => (onViewDetails ? onViewDetails(job) : onApply(job))}
+            onClick={handleApplyClick}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white flex-shrink-0"
             size="sm"
           >

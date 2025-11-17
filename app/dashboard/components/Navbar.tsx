@@ -11,8 +11,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Briefcase, ChevronDown, LogOut, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-export default function Navbar() {
+interface NavbarProps {
+  onNavigate?: (view: string) => void;
+}
+
+export default function Navbar({ onNavigate }: NavbarProps) {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // Clear all auth data
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("onboardingCompleted");
+    
+    // Redirect to login
+    router.push("/auth/login");
+  };
   return (
     <nav className="fixed top-0 left-60 right-0 h-16 bg-white shadow-sm z-10 border-b">
       <div className="h-full px-6 flex items-center justify-between">
@@ -31,27 +48,30 @@ export default function Navbar() {
             <Button 
               variant="ghost" 
               className="flex items-center gap-3 hover:bg-slate-50 rounded-lg p-2"
-            >
-              <div className="text-right">
-                <p className="text-sm font-semibold text-slate-900">Priya Sharma</p>
-                <p className="text-xs text-slate-600">MBA 2026</p>
-              </div>
-              <Avatar>
-                <AvatarImage src="https://avatar.iran.liara.run/public/girl" />
-                <AvatarFallback>PS</AvatarFallback>
-              </Avatar>
+          >
+            <div className="text-right">
+              <p className="text-sm font-semibold text-slate-900">Priya Sharma</p>
+              <p className="text-xs text-slate-600">MBA 2026</p>
+            </div>
+            <Avatar>
+              <AvatarImage src="https://avatar.iran.liara.run/public/girl" />
+              <AvatarFallback>PS</AvatarFallback>
+            </Avatar>
               <ChevronDown className="h-4 w-4 text-slate-600" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <User className="h-4 w-4 mr-2" />
-              My Profile
+            <DropdownMenuItem onClick={() => onNavigate?.("profile")}>
+                  <User className="h-4 w-4 mr-2" />
+                  My Profile
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-600 focus:text-red-700">
+            <DropdownMenuItem 
+              onClick={handleLogout}
+              className="text-red-600 focus:text-red-700"
+            >
               <LogOut className="h-4 w-4 mr-2" />
               Logout
             </DropdownMenuItem>

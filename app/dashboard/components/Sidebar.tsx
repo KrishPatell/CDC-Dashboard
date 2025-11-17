@@ -7,9 +7,9 @@ import {
   GitCompare,
   Users,
   Map,
-  MessageSquare,
   ChevronLeft,
   ChevronRight,
+  Settings,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -19,12 +19,11 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { id: "home", label: "Dashboard Home", icon: LayoutDashboard },
+  { id: "home", label: "Dashboard", icon: LayoutDashboard },
   { id: "applications", label: "My Applications", icon: FileText },
   { id: "comparator", label: "CV Comparator", icon: GitCompare },
   { id: "alumni", label: "Alumni Finder", icon: Users },
   { id: "roadmap", label: "Roadmap Coach", icon: Map },
-  { id: "feedback", label: "Feedback & Wellness", icon: MessageSquare },
 ];
 
 export default function Sidebar({ activeView, setActiveView }: SidebarProps) {
@@ -77,7 +76,18 @@ export default function Sidebar({ activeView, setActiveView }: SidebarProps) {
           })}
         </nav>
 
-        <div className="p-4 border-t border-slate-800">
+        <div className="p-4 border-t border-slate-800 space-y-3">
+          <button
+            onClick={() => setActiveView("profile")}
+            className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors ${
+              activeView === "profile"
+                ? "bg-white/20 text-white"
+                : "text-slate-300 hover:bg-slate-800 hover:text-white"
+            }`}
+          >
+            <Settings className="h-5 w-5 flex-shrink-0" />
+            {!isCollapsed && <span className="text-sm font-medium">My Profile</span>}
+          </button>
           {!isCollapsed && (
             <div className="bg-slate-800 rounded-lg p-3">
               <p className="text-xs text-slate-400 mb-1">Need Help?</p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import Navbar from "./components/Navbar";
@@ -13,6 +14,7 @@ import SuggestionsWidget from "./components/SuggestionsWidget";
 import AlumniList from "./components/AlumniList";
 import StartupGuide from "./components/StartupGuide";
 import JobDetailsModal from "./components/JobDetailsModal";
+import ProfilePage from "./components/ProfilePage";
 import {
   jobs,
   roadmapTasks as initialTasks,
@@ -23,6 +25,7 @@ import {
 } from "@/lib/mockData";
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [activeView, setActiveView] = useState("home");
   const [tasks, setTasks] = useState<RoadmapTask[]>(initialTasks);
   const [applications, setApplications] = useState<Application[]>(initialApplications);
@@ -43,7 +46,7 @@ export default function DashboardPage() {
 
     const frame = requestAnimationFrame(() => {
       try {
-        setTasks(JSON.parse(savedTasks));
+      setTasks(JSON.parse(savedTasks));
       } catch (error) {
         console.error("Failed to parse roadmapTasks from localStorage", error);
         localStorage.removeItem("roadmapTasks");
@@ -164,9 +167,27 @@ export default function DashboardPage() {
     });
   };
 
+  const handleViewChange = (view: string) => {
+    setActiveView(view);
+    
+    // Navigate to dedicated pages for new views
+    if (view === "alumni") {
+      router.push("/dashboard/alumni");
+      return;
+    }
+    if (view === "roadmap") {
+      router.push("/dashboard/roadmap");
+      return;
+    }
+    if (view === "comparator") {
+      router.push("/dashboard/comparator");
+      return;
+    }
+  };
+
   const renderView = () => {
     if (activeView === "home") {
-  return (
+      return (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -176,17 +197,17 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-bold text-slate-900 mb-2">
               Welcome back, Priya! 👋
             </h1>
-          <p className="text-slate-600">
+            <p className="text-slate-600">
               You have {applications.length} active applications and{" "}
               {tasks.filter((t) => !t.done).length} pending tasks.
             </p>
-                    </div>
+          </div>
 
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-slate-900">
-                Eligibility & Fit Roles
-              </h2>
+              Eligibility & Fit Roles
+            </h2>
               <JobFilter onFilterChange={setFilters} activeFilters={filters} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -201,7 +222,7 @@ export default function DashboardPage() {
             )}
           </div>
 
-                  <div>
+          <div>
             <h2 className="text-xl font-semibold text-slate-900 mb-4">
               Application Tracker
             </h2>
@@ -209,19 +230,42 @@ export default function DashboardPage() {
               applications={applications}
               setApplications={setApplications}
             />
-                        </div>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <RoadmapList tasks={tasks} toggleTask={toggleTask} />
             <SuggestionsWidget />
             <AlumniList onConnect={handleConnect} />
-                    </div>
-                  </motion.div>
+          </div>
+        </motion.div>
+      );
+    }
+
+    if (activeView === "profile") {
+      return <ProfilePage />;
+    }
+
+    if (activeView === "applications") {
+      return (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="space-y-6"
+        >
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900 mb-2">My Applications</h1>
+            <p className="text-slate-600">Track your job applications</p>
+          </div>
+          <KanbanBoard
+            applications={applications}
+            setApplications={setApplications}
+          />
+        </motion.div>
       );
     }
 
     return (
-                    <motion.div
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="flex items-center justify-center h-96"
@@ -231,23 +275,23 @@ export default function DashboardPage() {
             {activeView.charAt(0).toUpperCase() + activeView.slice(1)}
           </h2>
           <p className="text-slate-600">This view is coming soon!</p>
-                      </div>
-                    </motion.div>
+        </div>
+      </motion.div>
     );
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Sidebar activeView={activeView} setActiveView={setActiveView} />
-      <Navbar />
+      <Sidebar activeView={activeView} setActiveView={handleViewChange} />
+      <Navbar onNavigate={handleViewChange} />
 
       <main className="ml-60 mt-16 p-6">
         <div className="max-w-7xl mx-auto">{renderView()}</div>
       </main>
-
-      <StartupGuide
-        isOpen={showStartupGuide}
-        onClose={() => setShowStartupGuide(false)}
+      
+      <StartupGuide 
+        isOpen={showStartupGuide} 
+        onClose={() => setShowStartupGuide(false)} 
       />
 
       <JobDetailsModal
