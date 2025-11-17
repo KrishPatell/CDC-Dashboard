@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import Navbar from "./components/Navbar";
@@ -26,6 +26,7 @@ import {
 
 export default function DashboardPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [activeView, setActiveView] = useState("home");
   const [tasks, setTasks] = useState<RoadmapTask[]>(initialTasks);
   const [applications, setApplications] = useState<Application[]>(initialApplications);
@@ -37,6 +38,14 @@ export default function DashboardPage() {
     jobType: [],
     fit: [],
   });
+
+  // Handle URL search params to set the active view
+  useEffect(() => {
+    const view = searchParams.get("view");
+    if (view && ["home", "applications", "profile"].includes(view)) {
+      setActiveView(view);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const savedTasks = localStorage.getItem("roadmapTasks");
@@ -168,9 +177,7 @@ export default function DashboardPage() {
   };
 
   const handleViewChange = (view: string) => {
-    setActiveView(view);
-    
-    // Navigate to dedicated pages for new views
+    // Navigate to dedicated pages directly without setting state first
     if (view === "alumni") {
       router.push("/dashboard/alumni");
       return;
@@ -182,6 +189,13 @@ export default function DashboardPage() {
     if (view === "comparator") {
       router.push("/dashboard/comparator");
       return;
+    }
+    
+    // For views that stay on this page, update URL with search params
+    if (view === "home") {
+      router.push("/dashboard");
+    } else {
+      router.push(`/dashboard?view=${view}`);
     }
   };
 

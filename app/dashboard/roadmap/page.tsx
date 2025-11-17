@@ -81,9 +81,20 @@ export default function RoadmapCoachPage() {
   }, [skillGoals]);
 
   const handleSidebarNavigation = (view: string) => {
-    setActiveView(view);
-    if (view !== "roadmap") {
-      router.push(`/dashboard?view=${view}`);
+    // Navigate directly to the appropriate route
+    if (view === "home") {
+      router.push("/dashboard");
+    } else if (view === "applications") {
+      router.push("/dashboard?view=applications");
+    } else if (view === "profile") {
+      router.push("/dashboard?view=profile");
+    } else if (view === "comparator") {
+      router.push("/dashboard/comparator");
+    } else if (view === "alumni") {
+      router.push("/dashboard/alumni");
+    } else if (view === "roadmap") {
+      // Already on roadmap page, do nothing
+      return;
     }
   };
 

@@ -64,9 +64,20 @@ export default function CVComparatorPage() {
   }, [comparisonHistory]);
 
   const handleSidebarNavigation = (view: string) => {
-    setActiveView(view);
-    if (view !== "comparator") {
-      router.push(`/dashboard?view=${view}`);
+    // Navigate directly to the appropriate route
+    if (view === "home") {
+      router.push("/dashboard");
+    } else if (view === "applications") {
+      router.push("/dashboard?view=applications");
+    } else if (view === "profile") {
+      router.push("/dashboard?view=profile");
+    } else if (view === "alumni") {
+      router.push("/dashboard/alumni");
+    } else if (view === "roadmap") {
+      router.push("/dashboard/roadmap");
+    } else if (view === "comparator") {
+      // Already on comparator page, do nothing
+      return;
     }
   };
 

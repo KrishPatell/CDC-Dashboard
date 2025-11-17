@@ -175,12 +175,19 @@ export default function JobApplicationPage() {
   };
 
   const handleSidebarNavigation = (view: string) => {
-    setActiveView(view);
-    // Navigate to dashboard if clicking on a different view
-    if (view !== "home") {
-      router.push(`/dashboard?view=${view}`);
-    } else {
+    // Navigate directly to the appropriate route
+    if (view === "home") {
       router.push("/dashboard");
+    } else if (view === "applications") {
+      router.push("/dashboard?view=applications");
+    } else if (view === "profile") {
+      router.push("/dashboard?view=profile");
+    } else if (view === "alumni") {
+      router.push("/dashboard/alumni");
+    } else if (view === "roadmap") {
+      router.push("/dashboard/roadmap");
+    } else if (view === "comparator") {
+      router.push("/dashboard/comparator");
     }
   };
 
