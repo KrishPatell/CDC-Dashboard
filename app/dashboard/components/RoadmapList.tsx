@@ -34,16 +34,22 @@ export default function RoadmapList({ tasks, toggleTask }: RoadmapListProps) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.05 }}
             onClick={() => toggleTask(task.id)}
-            className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${
+            className={`group flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all duration-200 ${
               task.done
                 ? "bg-green-50 border-green-200"
-                : "hover:bg-slate-50 border-slate-200"
+                : "hover:bg-slate-50 hover:border-slate-300 border-slate-200"
             }`}
           >
             {task.done ? (
-              <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+              >
+                <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
+              </motion.div>
             ) : (
-              <Circle className="h-5 w-5 text-slate-400 flex-shrink-0" />
+              <Circle className="h-5 w-5 text-slate-400 flex-shrink-0 transition-colors group-hover:text-slate-600" />
             )}
             <span
               className={`text-sm ${

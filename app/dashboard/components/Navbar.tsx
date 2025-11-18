@@ -47,7 +47,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
           <DropdownMenuTrigger asChild>
             <Button 
               variant="ghost" 
-              className="flex items-center gap-3 hover:bg-slate-50 rounded-lg p-2"
+              className="flex items-center gap-3 hover:bg-slate-50 rounded-lg p-2 transition-colors duration-200"
           >
             <div className="text-right">
               <p className="text-sm font-semibold text-slate-900">Priya Sharma</p>

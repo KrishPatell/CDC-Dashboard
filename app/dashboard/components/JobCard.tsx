@@ -56,18 +56,20 @@ export default function JobCard({ job, onApply, onViewDetails }: JobCardProps) {
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 300 }}
+      whileHover={{ y: -2 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
       className="relative"
     >
-      <Card className="hover:shadow-lg transition-all duration-200 border-slate-200 bg-white min-h-[300px] flex flex-col !gap-0 !py-0">
+      <Card className="hover:shadow-md transition-shadow duration-200 border-slate-200 bg-white min-h-[300px] flex flex-col !gap-0 !py-0">
         <CardContent className="p-5 pb-4 flex flex-col flex-1 !px-5">
           {/* Heart Icon - Top Right */}
-          <button
+          <motion.button
             onClick={(e) => {
               e.stopPropagation();
               setIsFavorited(!isFavorited);
             }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
             className="absolute top-3 right-3 p-1.5 hover:bg-slate-100 rounded-full transition-colors z-10"
             aria-label="Favorite"
           >
@@ -78,7 +80,7 @@ export default function JobCard({ job, onApply, onViewDetails }: JobCardProps) {
                   : "text-slate-400 hover:text-red-500"
               } transition-colors`}
             />
-          </button>
+          </motion.button>
 
           {/* Logo and Job Info - Side by Side */}
           <div className="flex items-start gap-3 mb-3 pr-8">
@@ -178,13 +180,15 @@ export default function JobCard({ job, onApply, onViewDetails }: JobCardProps) {
           </div>
 
           {/* Apply Button */}
-          <Button
-            onClick={handleApplyClick}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white flex-shrink-0"
-            size="sm"
-          >
-            Apply Now
-          </Button>
+          <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+            <Button
+              onClick={handleApplyClick}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white flex-shrink-0 transition-colors"
+              size="sm"
+            >
+              Apply Now
+            </Button>
+          </motion.div>
         </CardContent>
       </Card>
     </motion.div>

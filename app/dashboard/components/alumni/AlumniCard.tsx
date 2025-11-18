@@ -47,10 +47,11 @@ export default function AlumniCard({ alumni, onConnect, onViewProfile }: AlumniC
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -2 }}
+      transition={{ duration: 0.2 }}
       className="h-full"
     >
-      <Card className="h-full hover:shadow-lg transition-all cursor-pointer border-slate-200">
+      <Card className="h-full hover:shadow-md transition-shadow duration-200 cursor-pointer border-slate-200">
         <CardContent className="p-5">
           <div className="flex items-start gap-4">
             <div className="relative">
@@ -150,24 +151,28 @@ export default function AlumniCard({ alumni, onConnect, onViewProfile }: AlumniC
               )}
 
               <div className="flex flex-col gap-2 mt-auto pt-4">
-                <Button
-                  onClick={() => onConnect(alumni)}
-                  disabled={isConnectionDisabled}
-                  size="sm"
-                  className="w-full bg-blue-600 hover:bg-blue-700"
-                  variant={isConnectionDisabled ? "outline" : "default"}
-                >
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  {getConnectionButtonText()}
-                </Button>
-                <Button
-                  onClick={() => onViewProfile(alumni)}
-                  size="sm"
-                  variant="outline"
-                  className="w-full"
-                >
-                  View Profile
-                </Button>
+                <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                  <Button
+                    onClick={() => onConnect(alumni)}
+                    disabled={isConnectionDisabled}
+                    size="sm"
+                    className="w-full bg-blue-600 hover:bg-blue-700 transition-colors"
+                    variant={isConnectionDisabled ? "outline" : "default"}
+                  >
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    {getConnectionButtonText()}
+                  </Button>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                  <Button
+                    onClick={() => onViewProfile(alumni)}
+                    size="sm"
+                    variant="outline"
+                    className="w-full transition-colors"
+                  >
+                    View Profile
+                  </Button>
+                </motion.div>
               </div>
             </div>
           </div>

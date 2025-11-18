@@ -146,12 +146,13 @@ export default function KanbanBoard({ applications, setApplications }: KanbanBoa
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.05 }}
                     >
-                      <div
+                      <motion.div
                         draggable
                         onDragStart={(e) => handleDragStart(e, app)}
                         onDragEnd={handleDragEnd}
-                        className={`bg-white px-3 py-3 rounded-lg border shadow-sm cursor-move transition-all hover:shadow-md hover:border-blue-300 group ${
-                          draggedItem?.id === app.id ? "opacity-50 rotate-2 scale-105" : ""
+                        whileHover={{ y: -1 }}
+                        className={`bg-white px-3 py-3 rounded-lg border shadow-sm cursor-move transition-all duration-200 hover:shadow-md hover:border-blue-300 group ${
+                          draggedItem?.id === app.id ? "opacity-50 rotate-1 scale-[1.02]" : ""
                         }`}
                       >
                         <div className="flex items-start justify-between mb-3">
@@ -191,7 +192,7 @@ export default function KanbanBoard({ applications, setApplications }: KanbanBoa
                             {stage}
                           </Badge>
                         </div>
-                      </div>
+                      </motion.div>
                     </motion.div>
                   );
                 })}
