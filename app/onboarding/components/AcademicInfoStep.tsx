@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +26,36 @@ export default function AcademicInfoStep({ data, onNext, onBack }: AcademicInfoS
   const updateField = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
+
+  const autoFillDemoData = () => {
+    setFormData({
+      program: "MBA",
+      batch: "2026",
+      cgpa: "3.8",
+      major: "Business Analytics",
+      minor: "Finance",
+      expectedGraduation: "2026-05",
+      previousEducation: [
+        {
+          degree: "B.Tech",
+          institution: "IIT Delhi",
+          year: "2024",
+          percentage: "85%",
+        },
+      ],
+    });
+  };
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === "l" || e.key === "L") {
+        autoFillDemoData();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, []);
 
   const addPreviousEducation = () => {
     setFormData(prev => ({

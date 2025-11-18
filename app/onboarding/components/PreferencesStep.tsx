@@ -28,7 +28,7 @@ export default function PreferencesStep({ data, onNext, onBack }: PreferencesSte
   };
 
   return (
-    <Card className="border-none shadow-2xl">
+    <Card className="border-none shadow-2xl max-w-2xl mx-auto">
       <CardContent className="p-8">
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Communication Preferences</h2>
@@ -108,26 +108,45 @@ export default function PreferencesStep({ data, onNext, onBack }: PreferencesSte
               <div className="flex-1">
                 <Label className="text-base font-semibold mb-3 block">Profile Visibility</Label>
                 <Select value={preferences.privacy} onValueChange={(value) => updateField("privacy", value)}>
-                  <SelectTrigger>
-                    <SelectValue />
+                  <SelectTrigger className="w-full h-auto min-h-[60px] py-3 px-3 text-left items-start">
+                    <SelectValue>
+                      {preferences.privacy === "public" ? (
+                        <div className="flex flex-col items-start gap-0.5">
+                          <span className="font-medium text-sm leading-tight">Public</span>
+                          <span className="text-xs text-slate-500 leading-tight">Visible to all employers and recruiters</span>
+                        </div>
+                      ) : preferences.privacy === "verified" ? (
+                        <div className="flex flex-col items-start gap-0.5">
+                          <span className="font-medium text-sm leading-tight">Verified Companies Only</span>
+                          <span className="text-xs text-slate-500 leading-tight">Visible to verified partner companies</span>
+                        </div>
+                      ) : preferences.privacy === "private" ? (
+                        <div className="flex flex-col items-start gap-0.5">
+                          <span className="font-medium text-sm leading-tight">Private</span>
+                          <span className="text-xs text-slate-500 leading-tight">Only visible when you apply</span>
+                        </div>
+                      ) : (
+                        "Select privacy setting"
+                      )}
+                    </SelectValue>
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="public">
-                      <div>
-                        <p className="font-medium">Public</p>
-                        <p className="text-xs text-slate-500">Visible to all employers and recruiters</p>
+                  <SelectContent align="start" className="w-[var(--radix-select-trigger-width)]">
+                    <SelectItem value="public" className="py-3 cursor-pointer">
+                      <div className="flex flex-col items-start text-left w-full gap-0.5">
+                        <p className="font-medium text-sm leading-tight">Public</p>
+                        <p className="text-xs text-slate-500 leading-tight">Visible to all employers and recruiters</p>
                       </div>
                     </SelectItem>
-                    <SelectItem value="verified">
-                      <div>
-                        <p className="font-medium">Verified Companies Only</p>
-                        <p className="text-xs text-slate-500">Visible to verified partner companies</p>
+                    <SelectItem value="verified" className="py-3 cursor-pointer">
+                      <div className="flex flex-col items-start text-left w-full gap-0.5">
+                        <p className="font-medium text-sm leading-tight">Verified Companies Only</p>
+                        <p className="text-xs text-slate-500 leading-tight">Visible to verified partner companies</p>
                       </div>
                     </SelectItem>
-                    <SelectItem value="private">
-                      <div>
-                        <p className="font-medium">Private</p>
-                        <p className="text-xs text-slate-500">Only visible when you apply</p>
+                    <SelectItem value="private" className="py-3 cursor-pointer">
+                      <div className="flex flex-col items-start text-left w-full gap-0.5">
+                        <p className="font-medium text-sm leading-tight">Private</p>
+                        <p className="text-xs text-slate-500 leading-tight">Only visible when you apply</p>
                       </div>
                     </SelectItem>
                   </SelectContent>

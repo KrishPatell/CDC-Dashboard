@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,6 +27,28 @@ export default function CareerGoalsStep({ data, onNext, onBack }: CareerGoalsSte
     e.preventDefault();
     onNext({ careerGoals });
   };
+
+  const autoFillDemoData = () => {
+    setCareerGoals({
+      shortTerm: "Secure a product management role at a leading tech company, focusing on data-driven product development and user experience optimization.",
+      longTerm: "Become a senior product leader, leading cross-functional teams to build innovative products that solve real-world problems. Eventually, I aim to start my own tech venture.",
+      industries: ["Technology", "Finance", "Consulting"],
+      roles: ["Product Manager", "Business Analyst", "Data Analyst"],
+      locations: ["Bangalore", "Mumbai", "Delhi"],
+      workMode: "hybrid",
+    });
+  };
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === "l" || e.key === "L") {
+        autoFillDemoData();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, []);
 
   const updateField = (field: string, value: string) => {
     setCareerGoals(prev => ({ ...prev, [field]: value }));

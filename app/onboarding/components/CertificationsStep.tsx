@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,34 @@ export default function CertificationsStep({ data, onNext, onBack, onSkip }: Cer
     e.preventDefault();
     onNext({ certifications });
   };
+
+  const autoFillDemoData = () => {
+    setCertifications([
+      {
+        name: "Google Data Analytics Professional Certificate",
+        issuer: "Google",
+        date: "2024-03",
+        credentialId: "ABC123456",
+      },
+      {
+        name: "AWS Certified Solutions Architect",
+        issuer: "Amazon Web Services",
+        date: "2024-06",
+        credentialId: "AWS-SA-789012",
+      },
+    ]);
+  };
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === "l" || e.key === "L") {
+        autoFillDemoData();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, []);
 
   const addCertification = () => {
     setCertifications(prev => [

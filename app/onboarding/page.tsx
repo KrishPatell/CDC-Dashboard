@@ -217,7 +217,7 @@ export default function OnboardingPage() {
             className="rounded-3xl border border-white/20 bg-white/10 backdrop-blur-3xl p-6 shadow-2xl shadow-blue-900/30"
           >
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-              <div>
+              <div className="text-left flex-1">
                 <p className="text-xs uppercase tracking-[0.3em] text-slate-200 mb-2">CDC Portal Onboarding</p>
                 <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
                   Welcome to your personalized career cockpit
