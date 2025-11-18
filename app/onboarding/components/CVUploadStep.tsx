@@ -194,7 +194,7 @@ export default function CVUploadStep({ data, onNext, onBack, onSkip }: CVUploadS
                       </div>
                       <div className="w-full bg-white/10 rounded-full h-2">
                         <motion.div
-                          className="bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600 h-2 rounded-full"
+                          className="bg-gradient-to-r from-blue-600 to-sky-500 h-2 rounded-full"
                           initial={{ width: 0 }}
                           animate={{ width: "100%" }}
                           transition={{ duration: 2 }}

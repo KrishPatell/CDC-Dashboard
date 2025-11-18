@@ -79,8 +79,8 @@ export default function PreferencesStep({ data, onNext, onBack }: PreferencesSte
             </div>
 
             <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-lg">
-              <div className="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Users className="w-5 h-5 text-purple-600" />
+              <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                <Users className="w-5 h-5 text-blue-600" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">

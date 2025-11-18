@@ -28,8 +28,8 @@ export default function CompletionStep() {
       icon: Trophy,
       label: "Profile Quality",
       value: "Excellent",
-      color: "text-purple-600",
-      bg: "bg-purple-100",
+      color: "text-blue-600",
+      bg: "bg-blue-100",
     },
   ];
 

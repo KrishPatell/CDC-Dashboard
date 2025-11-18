@@ -186,9 +186,9 @@ export default function OnboardingPage() {
     <div className="relative min-h-screen bg-slate-950 overflow-hidden">
       {/* Background Decorations */}
       <div className="absolute inset-0 opacity-40">
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-tr from-blue-500 via-sky-400 to-indigo-600 blur-[140px]" />
-        <div className="absolute top-24 right-0 w-[28rem] h-[28rem] bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-700 blur-[180px]" />
-        <div className="absolute -bottom-32 left-1/3 w-[36rem] h-[36rem] bg-gradient-to-tr from-sky-300 via-blue-400 to-indigo-500 blur-[220px]" />
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-tr from-blue-600 via-blue-500 to-sky-500 blur-[140px]" />
+        <div className="absolute top-24 right-0 w-[28rem] h-[28rem] bg-gradient-to-br from-sky-400 via-blue-600 to-blue-700 blur-[180px]" />
+        <div className="absolute -bottom-32 left-1/3 w-[36rem] h-[36rem] bg-gradient-to-tr from-blue-500 via-sky-400 to-blue-600 blur-[220px]" />
       </div>
 
       {/* Animated grid overlay */}
@@ -199,7 +199,7 @@ export default function OnboardingPage() {
       {/* Progress Bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-white/10 z-50">
         <motion.div
-          className="h-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600 shadow-[0_0_12px_rgba(56,189,248,0.8)]"
+          className="h-full bg-gradient-to-r from-blue-600 to-sky-500 shadow-[0_0_12px_rgba(37,99,235,0.8)]"
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.3 }}
@@ -235,7 +235,7 @@ export default function OnboardingPage() {
                   </div>
                   <div className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden">
                     <motion.div
-                      className="h-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600"
+                      className="h-full bg-gradient-to-r from-blue-600 to-sky-500"
                       initial={{ width: 0 }}
                       animate={{ width: `${progress}%` }}
                       transition={{ duration: 0.4 }}
